@@ -7,6 +7,10 @@ export type ModelSelectorOption = {
     label: string;
     description?: string;
     disabled?: boolean;
+
+    // Makes the option span both columns. Every model normally ships a High/Std pair that fills a row between them;
+    // one that has only a single variant would otherwise leave a visibly empty cell beside it.
+    fullWidth?: boolean;
 };
 
 type ModelSelectorProps = {
@@ -30,13 +34,13 @@ export const ModelSelector = ({ options, value, onChange }: ModelSelectorProps) 
                 onChange={onButtonClick}
                 className='bg-[#171717] grid grid-cols-2 gap-1 p-1'
             >
-                {options.map(({ value, label, description, disabled = false }) => (
+                {options.map(({ value, label, description, disabled = false, fullWidth = false }) => (
                     <ToggleButton
                         key={value}
                         size='small'
                         value={value}
                         disabled={disabled}
-                        className='relative border-0 rounded'
+                        className={`relative border-0 rounded ${fullWidth ? 'col-span-2' : ''}`}
                     >
                         {description && (
                             <Tooltip
